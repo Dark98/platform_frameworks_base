@@ -4187,6 +4187,18 @@ public final class Settings {
         /** @hide */
         private static final Validator DIALER_OPENCNAM_AUTH_TOKEN_VALIDATOR = ANY_STRING_VALIDATOR;
 
+        /**
+         * Wheter to show network traffic indicator in statusbar
+         * @hide
+         */
+        public static final String NETWORK_TRAFFIC_STATE = "network_traffic_state";
+
+        /**
+         * Network traffic inactivity threshold (default is 1 kBs)
+         * @hide
+         */
+        public static final String NETWORK_TRAFFIC_AUTOHIDE_THRESHOLD = "network_traffic_autohide_threshold";
+
         /***************************
          * AICP System Settings end
          ***************************/
@@ -4398,6 +4410,8 @@ public final class Settings {
             PRIVATE_SETTINGS.add(REVERSE_LOOKUP_PROVIDER);
             PRIVATE_SETTINGS.add(DIALER_OPENCNAM_ACCOUNT_SID);
             PRIVATE_SETTINGS.add(DIALER_OPENCNAM_AUTH_TOKEN);
+            PRIVATE_SETTINGS.add(NETWORK_TRAFFIC_STATE);
+            PRIVATE_SETTINGS.add(NETWORK_TRAFFIC_AUTOHIDE_THRESHOLD);
         }
 
         /**
