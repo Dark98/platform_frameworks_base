@@ -6120,6 +6120,9 @@ message MetricsEvent {
     // NOTIFICATION_SINCE_INTERRUPTION_MILLIS added to P
     // NOTIFICATION_INTERRUPTION added to P
 
+    // ACTION: Custom AICP metrics
+    AICP_METRICS = 10000;
+
     // ---- End P Constants, all P constants go above this line ----
 
     // Time since this notification last interrupted (visibly or audible) the user
