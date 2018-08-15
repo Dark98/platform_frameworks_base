@@ -4005,6 +4005,13 @@ public class NotificationStackScrollLayout extends ViewGroup
     public void setVerticalPanelTranslation(float verticalPanelTranslation) {
         mVerticalPanelTranslation = verticalPanelTranslation;
         updatePanelTranslation();
+
+    private void updateAntiBurnInTranslation() {
+        float x = mAntiBurnInOffsetX * mDarkAmount;
+        if (!onKeyguard()) {
+            x += getTranslationX();
+        }
+        setTranslationX(x);
     }
 
     /**
