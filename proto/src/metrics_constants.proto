@@ -6123,6 +6123,8 @@ message MetricsEvent {
     // ACTION: Custom AICP metrics
     AICP_METRICS = 10000;
 
+    CUSTOM_QUICK_TILES = 9001;
+
     // ---- End P Constants, all P constants go above this line ----
 
     // Time since this notification last interrupted (visibly or audible) the user
