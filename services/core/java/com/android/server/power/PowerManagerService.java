@@ -5011,7 +5011,7 @@ public final class PowerManagerService extends SystemService
         Message msg = mHandler.obtainMessage(MSG_BUTTON_TIMEOUT);
         msg.setAsynchronous(true);
         mHandler.sendMessageAtTime(msg, now + mButtonTimeout);
-
+    }
     private void cleanupProximity() {
         synchronized (mProximityWakeLock) {
             cleanupProximityLocked();
