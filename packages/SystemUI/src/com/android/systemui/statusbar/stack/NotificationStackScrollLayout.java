@@ -4006,13 +4006,6 @@ public class NotificationStackScrollLayout extends ViewGroup
         mVerticalPanelTranslation = verticalPanelTranslation;
         updatePanelTranslation();
     }
-    private void updateAntiBurnInTranslation() {
-        float x = mAntiBurnInOffsetX * mDarkAmount;
-        if (!onKeyguard()) {
-            x += getTranslationX();
-        }
-        setTranslationX(x);
-    }
 
     /**
      * Updates whether or not this Layout will perform its own custom drawing (i.e. whether or
