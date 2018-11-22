@@ -98,7 +98,6 @@ public class BatteryMeterView extends LinearLayout implements
     private int mNonAdaptedForegroundColor;
     private int mNonAdaptedBackgroundColor;
     private boolean mPowerSaveEnabled;
-    private boolean mCharging;
 
     private int mBatteryPercentPadding;
     private boolean mShowBatteryImage;
@@ -268,7 +267,6 @@ public class BatteryMeterView extends LinearLayout implements
         mLevel = level;
         if (mCharging != pluggedIn) {
             mCharging = pluggedIn;
-            updateShowPercent();
         }
         updatePercentText();
         setContentDescription(
@@ -313,9 +311,7 @@ public class BatteryMeterView extends LinearLayout implements
         final boolean showing = mBatteryPercentView != null;
         int style = Settings.System.getIntForUser(getContext().getContentResolver(),
                 SHOW_BATTERY_PERCENT, 1, mUser);
-        if (mForceShowPercent
-                || (getMeterStyle() != BatteryMeterDrawableBase.BATTERY_STYLE_HIDDEN
-                && (mForceShowPercent || mPowerSave || mCharging))) {
+        if (mForceShowPercent || mPowerSave || mCharging) {
             style = 1; // Default view
         }
         switch (style) {
@@ -324,6 +320,7 @@ public class BatteryMeterView extends LinearLayout implements
                     mBatteryPercentView = loadPercentView();
                     if (mTextColor != 0) mBatteryPercentView.setTextColor(mTextColor);
                     updatePercentText();
+                    mBatteryPercentView.setPadding(mShowBatteryImage ? mBatteryPercentPadding : 0, 0, 0, 0);
                     addView(mBatteryPercentView,
                             //0,
                             new ViewGroup.LayoutParams(
@@ -347,26 +344,14 @@ public class BatteryMeterView extends LinearLayout implements
                 mDrawable.setShowPercent(false);
                 break;
         }
-
-        if (mBatteryPercentView != null) {
-            final Resources res = getContext().getResources();
-            final int startPadding = res.getDimensionPixelSize(R.dimen.battery_level_padding_start);
-            mBatteryPercentView.setPaddingRelative(
-                    getMeterStyle() == BatteryMeterDrawableBase.BATTERY_STYLE_TEXT ? 0 : startPadding,
-                    0, 0, 0);
-        }
     }
 
-/*    final boolean showPercent = Settings.System.getInt(getContext().getContentResolver(),
-            SHOW_BATTERY_PERCENT, 0) != 0;
-    mBatteryPercentView.setVisibility((showPercent || mForceShowPercent) ? View.VISIBLE : View.GONE);
-    mBatteryPercentView.setPadding(mShowBatteryImage ? mBatteryPercentPadding : 0, 0, 0, 0);
-*/
     private void updateShowImage() {
         mShowBatteryImage = Settings.System.getInt(getContext().getContentResolver(),
                 AICP_SHOW_BATTERY_IMAGE, 1) == 1;
-        mBatteryIconView.setVisibility(mShowBatteryImage ? View.VISIBLE : View.GONE);
-        mBatteryPercentView.setPadding(mShowBatteryImage ? mBatteryPercentPadding : 0, 0, 0, 0);
+        if (mBatteryIconView != null) {
+            mBatteryIconView.setVisibility(mShowBatteryImage ? View.VISIBLE : View.GONE);
+        }
     }
 
     @Override
@@ -426,7 +411,9 @@ public class BatteryMeterView extends LinearLayout implements
     private void updateColors(int foregroundColor, int backgroundColor) {
         mDrawable.setColors(foregroundColor, backgroundColor);
         mTextColor = foregroundColor;
-        mBatteryPercentView.setTextColor(foregroundColor);
+        if (mBatteryPercentView != null) {
+            mBatteryPercentView.setTextColor(foregroundColor);
+        }
     }
 
     public void setFillColor(int color) {
